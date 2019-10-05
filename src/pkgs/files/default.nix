@@ -3,7 +3,7 @@
 
 { buildPkgs, initialBuild, nixDirectory
 , nixOnDroidChannelURL, nixpkgsChannelURL
-, proot-static }:
+, ids, proot-static }:
 
 let
   instDir = "/data/data/com.termux.nix/files/usr";
@@ -22,14 +22,13 @@ let
 
   callPackage = buildPkgs.lib.callPackageWith (buildPkgs // {
     inherit initialBuild instDir packageInfo writeTextDir;
-    inherit groupName userName;
+    inherit groupName userName ids;
     inherit shell;
     inherit nixOnDroidChannelURL nixpkgsChannelURL;
   });
 in
 
 {
-
   etc-group = callPackage ./etc-group.nix { };
 
   etc-passwd = callPackage ./etc-passwd.nix { };
