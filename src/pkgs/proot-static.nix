@@ -10,13 +10,13 @@
 #
 #       Thus, here I statically link proot with a regular toolchain. And glibc.
 
-{ pkgs, tallocStatic }:  # unpinned, non-cross, native (on-device) pkgs.
+{ pinnedPkgs, tallocStatic }:  # non-cross, native (on-device) pkgs.
 
-pkgs.stdenv.mkDerivation rec {
+pinnedPkgs.stdenv.mkDerivation rec {
   pname = "proot-termux";
   version = "unstable-2019-09-05";
 
-  src = pkgs.fetchFromGitHub {
+  src = pinnedPkgs.fetchFromGitHub {
     repo = "proot";
     owner = "termux";
     rev = "3ea655b1ae40bfa2ee612d45bf1e7ad97c4559f8";

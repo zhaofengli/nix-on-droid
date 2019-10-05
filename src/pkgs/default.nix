@@ -19,16 +19,16 @@ let
 
     nixDirectory = callPackage ./nix-directory.nix { };
 
-    proot-static = if initialBuild then
-      callPackage ./proot-static-cross.nix {
-        inherit crossStaticPinnedPkgs;
-        tallocStatic = callPackage ./talloc-static-cross.nix { };
-      }
-    else
-      callPackage ./proot-static.nix {
-        pkgs = buildPkgs;
-        tallocStatic = callPackage ./talloc-static.nix { pkgs = buildPkgs; };
-      };
+    proot-static =
+      if initialBuild
+      then
+        callPackage ./proot-static-cross.nix {
+          tallocStatic = callPackage ./talloc-static-cross.nix { };
+        }
+      else
+        callPackage ./proot-static.nix {
+          tallocStatic = callPackage ./talloc-static.nix { };
+        };
 
     qemuAarch64Static = callPackage ./qemu-aarch64-static.nix { };
   };
