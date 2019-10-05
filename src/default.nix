@@ -20,6 +20,6 @@ in
 
 import ./pkgs {
   inherit arch initialBuild nixOnDroidChannelURL nixpkgsChannelURL;
-  inherit (pkgsList) pinnedPkgs crossPkgs crossStaticPkgs;
+  inherit (pkgsList) pinnedPkgs crossPinnedPkgs crossStaticPinnedPkgs;
   buildPkgs = if initialBuild then pkgsList.pinnedPkgs else pkgs;
 }

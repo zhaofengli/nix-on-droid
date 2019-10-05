@@ -1,7 +1,7 @@
 # Licensed under GNU Lesser General Public License v3 or later, see COPYING.
 # Copyright (c) 2019 Alexander Sosedkin and other contributors, see AUTHORS.
 
-{ buildPkgs, files, nixDirectory, proot }:
+{ buildPkgs, files, nixDirectory }:
 
 let
   packageInfo = import "${nixDirectory}/nix-support/package-info.nix";
@@ -17,7 +17,7 @@ buildPkgs.runCommand "bootstrap" { } ''
   ln --symbolic --no-dereference ${packageInfo.bash}/bin/sh $out/bin/sh
   ln --symbolic --no-dereference ${packageInfo.coreutils}/bin/env $out/usr/bin/env
 
-  install -D -m 0755 ${proot}/bin/proot $out/bin/proot
+  install -D -m 0755 ${files.proot-static}/bin/proot-static $out/bin/proot-static
 
   cp ${files.login}/bin/login $out/bin/login
   cp ${files.login-inner}/usr/lib/login-inner $out/usr/lib/login-inner

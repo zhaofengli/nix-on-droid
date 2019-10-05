@@ -11,8 +11,6 @@ let
 in
 
 {
-  inherit (pkgs) proot;
-
   basic-environment = nixpkgs.buildEnv {
     name = "basic-environment";
 
@@ -21,7 +19,7 @@ in
       nixpkgs.cacert
       nixpkgs.coreutils
       nixpkgs.nix
-      # pkgs.proot
+      pkgs.proot-static
       pkgs.files.etc-group
       pkgs.files.etc-passwd
       pkgs.files.hm-install

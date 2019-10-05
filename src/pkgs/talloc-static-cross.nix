@@ -1,9 +1,9 @@
 # Licensed under GNU Lesser General Public License v3 or later, see COPYING.
 # Copyright (c) 2019 Alexander Sosedkin and other contributors, see AUTHORS.
 
-{ pinnedPkgs, crossPkgs }:
+{ pinnedPkgs, crossPinnedPkgs }:
 
-crossPkgs.stdenv.mkDerivation rec {
+crossPinnedPkgs.stdenv.mkDerivation rec {
   name = "talloc-2.1.14";
 
   src = pinnedPkgs.fetchurl {
@@ -13,7 +13,7 @@ crossPkgs.stdenv.mkDerivation rec {
 
   depsBuildBuild = [ pinnedPkgs.python2 pinnedPkgs.zlib ];
 
-  buildDeps = [ crossPkgs.zlib ];
+  buildDeps = [ crossPinnedPkgs.zlib ];
 
   configurePhase = ''
     substituteInPlace buildtools/bin/waf \
@@ -32,7 +32,7 @@ crossPkgs.stdenv.mkDerivation rec {
   installPhase = ''
     mkdir -p $out/lib
     make install
-    ${crossPkgs.stdenv.cc.targetPrefix}ar q $out/lib/libtalloc.a bin/default/talloc_[0-9]*.o
+    ${crossPinnedPkgs.stdenv.cc.targetPrefix}ar q $out/lib/libtalloc.a bin/default/talloc_[0-9]*.o
   '';
 
   fixupPhase = "";

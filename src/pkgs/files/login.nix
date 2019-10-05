@@ -11,7 +11,7 @@ writeScriptBin "login" ''
   export PROOT_TMP_DIR=${instDir}/tmp
   export PROOT_L2S_DIR=${instDir}/.l2s
 
-  exec ${instDir}/bin/proot \
+  exec ${instDir}/bin/proot-static \
     -b ${instDir}/nix:/nix \
     -b ${instDir}/bin:/bin \
     -b ${instDir}/etc:/etc \

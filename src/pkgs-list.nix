@@ -34,9 +34,9 @@ in
 {
   inherit pinnedPkgs;
 
-  crossPkgs = import pinnedPkgsSrc ({ inherit crossSystem; } // defaultNixpkgsArgs);
+  crossPinnedPkgs = import pinnedPkgsSrc ({ inherit crossSystem; } // defaultNixpkgsArgs);
 
-  crossStaticPkgs = import pinnedPkgsSrc ({
+  crossStaticPinnedPkgs = import pinnedPkgsSrc ({
     inherit crossSystem;
 
     crossOverlays = [

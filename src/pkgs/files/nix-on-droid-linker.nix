@@ -1,7 +1,7 @@
 # Licensed under GNU Lesser General Public License v3 or later, see COPYING.
 # Copyright (c) 2019 Alexander Sosedkin and other contributors, see AUTHORS.
 
-{ coreutils, writeScriptBin }:
+{ coreutils, writeScriptBin, instDir }:
 
 writeScriptBin "nix-on-droid-linker" ''
   #!/usr/bin/env sh
@@ -16,7 +16,7 @@ writeScriptBin "nix-on-droid-linker" ''
     ${coreutils}/bin/ln -snf $HOME/.nix-profile/$from /$to
   }
 
-  for i in login sh; do
+  for i in login sh proot-static; do
     link bin/$i bin/$i
   done
 

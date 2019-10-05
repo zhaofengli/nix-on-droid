@@ -1,7 +1,9 @@
 # Licensed under GNU Lesser General Public License v3 or later, see COPYING.
 # Copyright (c) 2019 Alexander Sosedkin and other contributors, see AUTHORS.
 
-{ buildPkgs, initialBuild, nixDirectory, nixOnDroidChannelURL, nixpkgsChannelURL }:
+{ buildPkgs, initialBuild, nixDirectory
+, nixOnDroidChannelURL, nixpkgsChannelURL
+, proot-static }:
 
 let
   instDir = "/data/data/com.termux.nix/files/usr";
@@ -52,4 +54,14 @@ in
     nameserver 1.1.1.1
     nameserver 8.8.8.8
   '';
+
+  inherit proot-static;
+  #proot-static = if initialBuild then
+  #  callPackage ../proot-static-cross.nix {
+  #    tallocStatic = callPackage ../talloc-static-cross.nix {};
+  #  }
+  #else
+  #  callPackage ../proot-static.nix {
+  #    tallocStatic = callPackage ../talloc-static.nix {};
+  #  };
 }
