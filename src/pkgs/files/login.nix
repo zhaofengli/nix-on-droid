@@ -62,6 +62,7 @@ instDir=/data/data/com.termux.nix/files/usr
 export USER=nix-on-droid
 export PROOT_TMP_DIR=${instDir}/tmp
 export PROOT_L2S_DIR=${instDir}/.l2s
+export PROOT_NO_SECCOMP=1
 
 PROOT=${instDir}/bin/proot-static
 if [ ! -x "$PROOT" ]; then
