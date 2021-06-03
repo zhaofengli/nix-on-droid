@@ -8,7 +8,7 @@ in
 
 pkgs.cross.talloc.overrideAttrs (old: rec {
   pname = "talloc-static";
-  version = "2.1.14";
+  version = "2.3.2";
   name = "${pname}-${version}";
 
   nativeBuildInputs = [ python3 wafHook ];
