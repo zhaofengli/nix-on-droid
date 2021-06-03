@@ -19,11 +19,11 @@ let
     ];
   };
 
-  # head of nixos-20.09 as of 2020-11-07
+  # head of nixos-21.05 as of 2021-06-03
   # note: when updating nixpkgs, update store paths of proot-termux in modules/environment/login/default.nix
   pinnedPkgsSrc = builtins.fetchTarball {
-    url = "https://github.com/NixOS/nixpkgs/archive/d105075a1fd870b1d1617a6008cb38b443e65433.tar.gz";
-    sha256 = "1jcs44wn0s6mlf2jps25bvcai1rij9b2dil6zcj8zqwf2i8xmqjh";
+    url = "https://github.com/NixOS/nixpkgs/archive/eaba7870ffc3400eca4407baa24184b7fe337ec1.tar.gz";
+    sha256 = "115disiz4b08iw46cidc7lm0advrxn5g2ldmlrxd53zf03skyb2w";
   };
 in
 
