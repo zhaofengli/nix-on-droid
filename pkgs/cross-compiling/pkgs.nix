@@ -8,7 +8,7 @@ let
   crossSystem = {
     config = "${config.build.arch}-unknown-linux-android";
     sdkVer = "24";
-    ndkVer = "18b";
+    ndkVer = "21";
     useAndroidPrebuilt = true;
   };
 in
