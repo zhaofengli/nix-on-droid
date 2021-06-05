@@ -15,13 +15,18 @@ pkgs.crossStatic.stdenv.mkDerivation {
     owner = "termux";
     rev = "8f67d6c7fadb445b7a528020d05e72dba717c5b9";
     sha256 = "0xlfaph2nx3y8jk3jyjb00n44sbzhj89liv7ndf9ss39mzichh1n";
+
+    # 1 step behind 6f12fbee "Implement shmat", use if ashmem.h is missing
+    #rev = "ffd811ee726c62094477ed335de89fc107cadf17";
+    #sha256 = "1zjblclsybvsrjmq2i0z6prhka268f0609w08dh9vdrbrng117f8";
+
   };
 
   buildInputs = [ tallocStatic ];
 
   patches = [ ./proot-detranslate-empty.patch ];
 
-  makeFlags = [ "-Csrc CFLAGS=-D__ANDROID__" ];
+  makeFlags = [ "-Csrc" "V=1" ];
 
   installPhase = ''
     install -D -m 0755 src/proot $out/bin/proot-static

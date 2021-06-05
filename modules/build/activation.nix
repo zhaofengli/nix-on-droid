@@ -18,6 +18,7 @@ let
     pkgs.findutils
     pkgs.gnugrep
     pkgs.gnused
+    pkgs.gzip
     pkgs.ncurses          # For `tput`.
     pkgs.nix
   ];
