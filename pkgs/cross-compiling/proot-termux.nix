@@ -6,7 +6,7 @@ let
   pkgs = callPackage ./pkgs.nix { };
 in
 
-pkgs.crossStatic.stdenv.mkDerivation {
+pkgs.cross.stdenv.mkDerivation {
   pname = "proot-termux";
   version = "unstable-2021-05-03";
 
@@ -22,11 +22,18 @@ pkgs.crossStatic.stdenv.mkDerivation {
 
   };
 
-  buildInputs = [ tallocStatic ];
+  #LDFLAGS = [ "-static" "-ltalloc" "-shared" ];
+  #buildInputs = [ tallocStatic ];
+  CFLAGS = [ "-I${tallocStatic}/include" ];
+  LDFLAGS = [ "${tallocStatic}/lib/libtalloc.a" ];
 
   patches = [ ./proot-detranslate-empty.patch ];
 
   makeFlags = [ "-Csrc" "V=1" ];
+
+  postPatch = ''
+    substituteInPlace src/GNUmakefile --replace '-ltalloc' ""
+  '';
 
   installPhase = ''
     install -D -m 0755 src/proot $out/bin/proot-static
