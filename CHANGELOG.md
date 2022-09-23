@@ -2,6 +2,12 @@
 
 ## Release 22.11 (unreleased)
 
+* Terminal font now should be specified using `terminal.font` option,
+  set it to a TTF file to apply a font.
+  An in-app `Styling` option will no longer work.
+  Previously present file will be backed up to `~/.termux/font.ttf.bak`.
+* `/proc/uptime` is now faked with a stub that allows unpatched `ps` to work.
+
 ## Release 22.05
 
 ### Compatibility considerations

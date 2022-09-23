@@ -18,6 +18,7 @@
   ./nixpkgs/options.nix
   ./services/openssh.nix
   ./supervisord.nix
+  ./terminal.nix
   ./time.nix
   ./upgrade.nix
   ./user.nix
