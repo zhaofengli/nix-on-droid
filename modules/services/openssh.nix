@@ -1,26 +1,23 @@
+# Copyright (c) 2019-2022, see AUTHORS. Licensed under MIT License, see LICENSE.
+
 # Parts from nixpkgs/nixos/modules/services/networking/ssh/sshd.nix
 # MIT Licensed. Copyright (c) 2003-2022 Eelco Dolstra and the Nixpkgs/NixOS contributors
 
 { pkgs, lib, config, ... }:
 let
-  inherit (lib)
-    types
-    flip
-    concatStringsSep
-    concatMapStrings
-    optionalString;
+  inherit (lib) types;
 
   cfg = config.services.openssh;
 
   uncheckedConf = ''
-    ${concatMapStrings (port: ''
+    ${lib.concatMapStrings (port: ''
       Port ${toString port}
     '') cfg.ports}
-    PasswordAuthentication ${if cfg.passwordAuthentication then "yes" else "no"}
-    ${flip concatMapStrings cfg.hostKeys (k: ''
+    PasswordAuthentication no
+    ${lib.flip lib.concatMapStrings cfg.hostKeys (k: ''
       HostKey ${k.path}
     '')}
-    ${optionalString cfg.allowSFTP ''
+    ${lib.optionalString cfg.allowSFTP ''
       Subsystem sftp ${cfg.package}/libexec/sftp-server
     ''}
     SetEnv PATH=${config.user.home}/.nix-profile/bin:/usr/bin:/bin
@@ -41,7 +38,7 @@ in {
   options = {
     services.openssh = {
       enable = lib.mkOption {
-        description = lib.mdDoc ''
+        description = ''
           Whether to enable the OpenSSH secure shell daemon, which
           allows secure remote logins.
         '';
@@ -67,21 +64,14 @@ in {
         defaultText = lib.literalExpression "pkgs.openssh";
       };
       ports = lib.mkOption {
-        description = lib.mdDoc ''
+        description = ''
           Specifies on which ports the SSH daemon listens.
         '';
         type = types.listOf types.port;
         default = [ 8022 ];
       };
-      passwordAuthentication = lib.mkOption {
-        description = lib.mdDoc ''
-          Whether password authentication is allowed.
-        '';
-        type = types.bool;
-        default = true;
-      };
       allowSFTP = lib.mkOption {
-        description = lib.mdDoc ''
+        description = ''
           Whether to enable the SFTP subsystem in the SSH daemon.  This
           enables the use of commands such as {command}`sftp` and
           {command}`sshfs`.
@@ -90,7 +80,7 @@ in {
         default = true;
       };
       hostKeys = lib.mkOption {
-        description = lib.mdDoc ''
+        description = ''
           Nix-on-Droid can automatically generate SSH host keys.  This option
           specifies the path, type and size of each key.  See
           {manpage}`ssh-keygen(1)` for supported types
@@ -107,7 +97,7 @@ in {
           ];
       };
       extraConfig = lib.mkOption {
-        description = lib.mdDoc "Verbatim contents of {file}`sshd_config`.";
+        description = "Verbatim contents of {file}`sshd_config`.";
         type = types.lines;
         default = "";
       };
@@ -124,7 +114,10 @@ in {
       path = [ cfg.package pkgs.coreutils ];
       autoRestart = true;
       script = ''
-        ${flip concatMapStrings cfg.hostKeys (k: ''
+        # don't write to stdout
+        exec >&2
+
+        ${lib.flip lib.concatMapStrings cfg.hostKeys (k: ''
           if ! [ -s "${k.path}" ]; then
               if ! [ -h "${k.path}" ]; then
                   rm -f "${k.path}"
