@@ -45,6 +45,7 @@ let
     bootstrapZip = callPackage ./bootstrap-zip.nix { };
     prootTermux = callPackage ./cross-compiling/proot-termux.nix { };
     tallocStatic = callPackage ./cross-compiling/talloc-static.nix { };
+    termux-am-socket = callPackage ./cross-compiling/termux-am-socket.nix { };
   };
 in
 
